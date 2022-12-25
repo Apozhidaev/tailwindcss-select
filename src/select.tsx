@@ -6,7 +6,7 @@ import {
   ChevronDownIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-import type { SelectProps } from "./common/types";
+import type { SelectProps } from "./types";
 
 function Select({
   className,

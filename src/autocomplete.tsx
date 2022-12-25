@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { Fragment, memo } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import type { Option, CommonProps } from "./common/types";
+import type { Option, CommonProps } from "./types";
 
 type Props = CommonProps & {
   selectedOption: Option | null;

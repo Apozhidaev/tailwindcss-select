@@ -7,9 +7,9 @@ import {
   XMarkIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import type { SelectProps } from "./common/types";
+import type { SelectProps } from "./types";
 
-function SelectSelect({
+function SearchSelect({
   className,
   options,
   selectedOption,
@@ -162,4 +162,4 @@ function SelectSelect({
   );
 }
 
-export default memo(SelectSelect);
+export default memo(SearchSelect);

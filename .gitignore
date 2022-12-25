@@ -1,4 +1,4 @@
 node_modules/
 dist/
-select/module.js
-select/index.js
+route/module.js
+route/index.js

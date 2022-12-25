@@ -26,4 +26,11 @@ export type MultipleProps = {
   multiple: true;
 };
 
+export type RouteProps = {
+  filterName: string;
+  multiple?: boolean;
+};
+
 export type SelectProps = CommonProps & (SingleProps | MultipleProps);
+
+export type RouteSelectProps = CommonProps & RouteProps;
