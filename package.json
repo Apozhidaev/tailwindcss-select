@@ -1,0 +1,38 @@
+{
+  "name": "@tailwind-rc/select",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "module": "dist/module.js",
+  "types": "dist/index.d.ts",
+  "repository": "git@github.com:Apozhidaev/tailwindcss-select.git",
+  "author": "alexanderpo <alexander.pozhidaev@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist/common",
+    "build:ts": "tsc && yarn run clean",
+    "build:cjs": "esbuild src/index.tsx --format=cjs --bundle --outfile=dist/index.js --external:@heroicons/* --external:react* --external:classnames --external:@headlessui/*",
+    "build:esm": "esbuild src/index.tsx --format=esm --bundle --outfile=dist/module.js --external:@heroicons/* --external:react* --external:classnames --external:@headlessui/*",
+    "build": "yarn run build:cjs && yarn run build:esm && yarn run build:ts"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.13",
+    "classnames": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "esbuild": "^0.16.9",
+    "react": "^18.2.0",
+    "typescript": "^4.9.4"
+  }
+}

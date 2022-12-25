@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .form-control {
+    @apply block w-full h-9 py-2 pl-3 pr-10 text-left text-sm rounded-md border border-secondary-300 shadow-sm focus:outline-none focus-visible:border-primary-500 focus-visible:ring-1 focus-visible:ring-primary-500;
+  }
+
+  .form-filter {
+    @apply ring-1 border-orange-300/80 ring-orange-300/80;
+  }
+}
