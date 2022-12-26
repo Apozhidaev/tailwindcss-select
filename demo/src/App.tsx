@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Select from "../../src/index";
-import SearchSelect from "../../src/selectSelect";
+import SearchSelect from "../../src/searchSelect";
 import Autocomplete from "../../src/autocomplete";
-import { Option } from "../../src/common/types";
+import { Option } from "../../src/types";
 
 const options: Option[] = [
   { label: "Wade Cooper", value: "1" },

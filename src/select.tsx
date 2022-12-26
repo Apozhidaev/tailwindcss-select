@@ -60,7 +60,7 @@ function Select({
       {resetButton && selectedLabel && (
         <button
           type="button"
-          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 rounded hover:bg-secondary-100 active:bg-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 rounded hover:bg-secondary-100 active:bg-secondary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
           onClick={() => {
             if (multiple) {
               onChange([]);
