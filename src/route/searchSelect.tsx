@@ -6,10 +6,11 @@ import SearchSelect from "../searchSelect";
 function RouteSearchSelect({
   options,
   filterName,
+  emptyValue,
   multiple,
   ...rest
 }: RouteSelectProps) {
-  const { onChange, selectedOptions } = useRouteSelect(options, filterName);
+  const { onChange, selectedOptions } = useRouteSelect(options, filterName, emptyValue);
   if (multiple) {
     return (
       <SearchSelect
@@ -31,4 +32,5 @@ function RouteSearchSelect({
   );
 }
 
+export { SearchSelect };
 export default memo(RouteSearchSelect);

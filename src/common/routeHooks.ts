@@ -1,7 +1,11 @@
 import { useSearchParams } from "react-router-dom";
 import type { Option } from "../types";
 
-export function useRouteSelect(options: Option[], filterName: string) {
+export function useRouteSelect(
+  options: Option[],
+  filterName: string,
+  emptyValue?: boolean
+) {
   const [searchParams, setSearchParams] = useSearchParams();
   const optionValues = searchParams.getAll(filterName);
   const selectedOptions = options.filter((x) => optionValues.includes(x.value));
@@ -17,6 +21,8 @@ export function useRouteSelect(options: Option[], filterName: string) {
       } else {
         searchParams.set(filterName, option.value);
       }
+    } else if (emptyValue) {
+      searchParams.set(filterName, "");
     }
 
     setSearchParams(searchParams, { replace: true });

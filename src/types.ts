@@ -28,6 +28,7 @@ export type MultipleProps = {
 
 export type RouteProps = {
   filterName: string;
+  emptyValue?: boolean;
   multiple?: boolean;
 };
 

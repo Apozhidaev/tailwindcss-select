@@ -4,7 +4,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import type { Option, CommonProps } from "./types";
 
-type Props = CommonProps & {
+export type AutocompleteProps = CommonProps & {
   selectedOption: Option | null;
   onChange: (value: Option | null) => void;
   searchQuery: string;
@@ -24,7 +24,7 @@ function Autocomplete({
   onSearch,
   minQueryLength = 2,
   resetButton = true,
-}: Props) {
+}: AutocompleteProps) {
   const selectedValue = selectedOption;
   const selectedLabel = selectedOption?.label;
 

@@ -6,10 +6,11 @@ import Select from "../select";
 function RouteSelect({
   options,
   filterName,
+  emptyValue,
   multiple,
   ...rest
 }: RouteSelectProps) {
-  const { onChange, selectedOptions } = useRouteSelect(options, filterName);
+  const { onChange, selectedOptions } = useRouteSelect(options, filterName, emptyValue);
   if (multiple) {
     return (
       <Select
@@ -31,4 +32,5 @@ function RouteSelect({
   );
 }
 
+export { Select };
 export default memo(RouteSelect);

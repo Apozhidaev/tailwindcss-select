@@ -3,15 +3,16 @@ import { useRouteSelect } from "../common/routeHooks";
 import type { CommonProps } from "../types";
 import Autocomplete from "../autocomplete";
 
-type Props = CommonProps & {
+export type RouteAutocompleteProps = CommonProps & {
   filterName: string;
   searchQuery: string;
   onSearch: (searchQuery: string, entry: boolean) => void;
   minQueryLength?: number;
+  emptyValue?: boolean;
 };
 
-function RouteAutocomplete({ options, filterName, ...rest }: Props) {
-  const { onChange, selectedOptions } = useRouteSelect(options, filterName);
+function RouteAutocomplete({ options, filterName, emptyValue, ...rest }: RouteAutocompleteProps) {
+  const { onChange, selectedOptions } = useRouteSelect(options, filterName, emptyValue);
   return (
     <Autocomplete
       {...rest}
@@ -22,4 +23,5 @@ function RouteAutocomplete({ options, filterName, ...rest }: Props) {
   );
 }
 
+export { Autocomplete };
 export default memo(RouteAutocomplete);
