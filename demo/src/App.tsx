@@ -2,7 +2,8 @@ import { useState } from "react";
 import Select from "../../src/index";
 import SearchSelect from "../../src/searchSelect";
 import Autocomplete from "../../src/autocomplete";
-import { Option } from "../../src/types";
+import TreeSelect from "../../src/treeSelect";
+import { Option, TreeNode } from "../../src/types";
 
 const options: Option[] = [
   { label: "Wade Cooper", value: "1" },
@@ -13,6 +14,19 @@ const options: Option[] = [
   { label: "Hellen Schmidt", value: "6" },
 ];
 
+const treeData: TreeNode[] = [
+  { label: "Wade Cooper", value: "1" },
+  { label: "Arlene Mccoy", value: "2" },
+  {
+    label: "Devon Webb",
+    children: [
+      { label: "Tom Cook", value: "4" },
+      { label: "Tanya Fox", value: "5" },
+    ],
+  },
+  { label: "Hellen Schmidt", value: "6" },
+];
+
 function App() {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
@@ -20,6 +34,8 @@ function App() {
   const [selectedOptions2, setSelectedOptions2] = useState<Option[]>([]);
   const [selectedOption3, setSelectedOption3] = useState<Option | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOptions4, setSelectedOptions4] = useState<Option[]>([]);
+  const [selectedOption4, setSelectedOption4] = useState<Option | null>(null);
   return (
     <div className="p-10 grid grid-cols-2 gap-4">
       <Select
@@ -56,6 +72,24 @@ function App() {
         onChange={(value) => {
           console.log(value);
           setSelectedOptions2(value);
+        }}
+        multiple
+      />
+
+      <TreeSelect
+        selectedOption={selectedOption4}
+        treeData={treeData}
+        onChange={(value) => {
+          console.log(value);
+          setSelectedOption4(value);
+        }}
+      />
+      <TreeSelect
+        selectedOptions={selectedOptions4}
+        treeData={treeData}
+        onChange={(value) => {
+          console.log(value);
+          setSelectedOptions4(value);
         }}
         multiple
       />

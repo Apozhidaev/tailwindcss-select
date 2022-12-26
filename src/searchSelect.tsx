@@ -124,12 +124,10 @@ function SearchSelect({
             <div className="overflow-auto max-h-60">
               {currentOptions.map((option) => (
                 <Combobox.Option
-                  key={option.value}
+                  key={option.label}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active
-                        ? "bg-primary-100 text-primary-900"
-                        : "text-secondary-900"
+                    `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 ${
+                      active ? "bg-primary-100" : ""
                     }`
                   }
                   value={option}
@@ -137,9 +135,10 @@ function SearchSelect({
                   {({ selected }) => (
                     <>
                       <span
+                        title={option.label}
                         className={`block truncate ${
                           selected && selectedValue
-                            ? "font-medium"
+                            ? "font-medium text-secondary-900"
                             : "font-normal"
                         }`}
                       >

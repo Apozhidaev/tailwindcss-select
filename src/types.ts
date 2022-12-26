@@ -35,3 +35,21 @@ export type RouteProps = {
 export type SelectProps = CommonProps & (SingleProps | MultipleProps);
 
 export type RouteSelectProps = CommonProps & RouteProps;
+
+export type TreeNode = { label: string } & (
+  | { children: TreeNode[]; value?: never }
+  | { children?: never; value: string }
+);
+
+export type TreeGroup = {
+  label: string;
+  children: TreeNode[];
+};
+
+export type TreeCommonProps = Omit<CommonProps, "options"> & {
+  treeData: TreeNode[];
+};
+
+export type TreeSelectProps = TreeCommonProps & (SingleProps | MultipleProps);
+
+export type RouteTreeSelectProps = TreeCommonProps & RouteProps;
