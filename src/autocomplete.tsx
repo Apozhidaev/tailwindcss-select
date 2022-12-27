@@ -8,7 +8,7 @@ export type AutocompleteProps = CommonProps & {
   selectedOption: Option | null;
   onChange: (value: Option | null) => void;
   searchQuery: string;
-  onSearch: (searchQuery: string, entry: boolean) => void;
+  onSearch: (searchQuery: string, valid: boolean) => void;
   minQueryLength?: number;
 };
 
@@ -47,7 +47,7 @@ function Autocomplete({
       <Combobox.Input
         placeholder={selectedLabel || placeholder}
         className={classNames(
-          "relative form-control h-9 cursor-default py-2 pl-3 pr-10 text-left text-sm truncate",
+          "relative form-control cursor-default pl-3 pr-10 text-left text-sm truncate",
           filter ? "form-filter" : "",
           selectedLabel
             ? "placeholder-secondary-800"

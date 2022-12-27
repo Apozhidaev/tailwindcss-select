@@ -2,6 +2,7 @@ import { useState } from "react";
 import Select from "../../src/index";
 import SearchSelect from "../../src/searchSelect";
 import Autocomplete from "../../src/autocomplete";
+import RouteAutocomplete from "../../src/route/autocomplete";
 import TreeSelect from "../../src/treeSelect";
 import { Option, TreeNode } from "../../src/types";
 
@@ -107,6 +108,21 @@ function App() {
         placeholder="Search by..."
         // resetButton={false}
         filter
+      />
+      <RouteAutocomplete
+        searchQuery={searchQuery}
+        onSearch={(value) => {
+          setSearchQuery(value);
+        }}
+        // selectedOption={selectedOption3}
+        options={options}
+        // onChange={(value) => {
+        //   console.log(value);
+        //   setSelectedOption3(value);
+        // }}
+        placeholder="Search by..."
+        // resetButton={false}
+        filterName="teat1"
       />
     </div>
   );

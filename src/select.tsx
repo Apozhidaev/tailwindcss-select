@@ -35,7 +35,7 @@ function Select({
     >
       <Listbox.Button
         className={classNames(
-          "relative form-control h-9 cursor-default py-2 pl-3 pr-10 text-left text-sm",
+          "relative form-control cursor-default pl-3 pr-10 text-left text-sm",
           filter ? "form-filter" : ""
         )}
       >

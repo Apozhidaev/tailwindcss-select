@@ -29,6 +29,7 @@ export function useRouteSelect(
   };
 
   return {
+    optionValues,
     selectedOptions,
     onChange,
   };
