@@ -4,26 +4,28 @@ import type { Option } from "../types";
 export function useRouteSelect(
   options: Option[],
   filterName: string,
-  emptyValue?: boolean
+  defaultValues: string[] = []
 ) {
   const [searchParams, setSearchParams] = useSearchParams();
   const optionValues = searchParams.getAll(filterName);
-  const selectedOptions = options.filter((x) => optionValues.includes(x.value));
+  const selectedValues = optionValues.length > 0 ? optionValues : defaultValues;
+  const selectedOptions =
+    selectedValues.length > 0
+      ? options.filter((x) => selectedValues.includes(x.value))
+      : [];
 
   const onChange = (option: Option | Option[] | null) => {
     searchParams.delete(filterName);
 
-    if (option) {
-      if (Array.isArray(option)) {
-        option.forEach((x) => {
-          searchParams.append(filterName, x.value);
-        });
-      } else {
-        searchParams.set(filterName, option.value);
+    const values = Array.isArray(option)
+      ? option.map((x) => x.value)
+      : [option?.value || ""];
+
+    values.forEach((value) => {
+      if (!defaultValues.includes(value)) {
+        searchParams.append(filterName, value);
       }
-    } else if (emptyValue) {
-      searchParams.set(filterName, "");
-    }
+    });
 
     setSearchParams(searchParams, { replace: true });
   };

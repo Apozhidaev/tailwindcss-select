@@ -7,14 +7,16 @@ import { getOptions } from "../common/utils";
 function RouteTreeSelect({
   treeData,
   filterName,
-  emptyValue,
+  defaultValue = "",
+  defaultValues = [""],
   multiple,
+  filter,
   ...rest
 }: RouteTreeSelectProps) {
-  const { onChange, selectedOptions } = useRouteSelect(
+  const { onChange, selectedOptions, optionValues } = useRouteSelect(
     getOptions(treeData),
     filterName,
-    emptyValue
+    multiple ? defaultValues : [defaultValue]
   );
   if (multiple) {
     return (
@@ -24,6 +26,7 @@ function RouteTreeSelect({
         selectedOptions={selectedOptions}
         onChange={onChange}
         multiple
+        filter={filter !== undefined ? filter : optionValues.length > 0}
       />
     );
   }
@@ -33,6 +36,7 @@ function RouteTreeSelect({
       treeData={treeData}
       selectedOption={selectedOptions[0] || null}
       onChange={onChange}
+      filter={filter !== undefined ? filter : optionValues.length > 0}
     />
   );
 }

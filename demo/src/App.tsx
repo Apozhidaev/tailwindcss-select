@@ -111,6 +111,7 @@ function App() {
         filter
       />
       <RouteAutocomplete
+        defaultValue="2"
         searchQuery={searchQuery}
         onSearch={(value) => {
           setSearchQuery(value);

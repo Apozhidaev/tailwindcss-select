@@ -6,11 +6,17 @@ import Select from "../select";
 function RouteSelect({
   options,
   filterName,
-  emptyValue,
   multiple,
+  filter,
+  defaultValue = "",
+  defaultValues = [""],
   ...rest
 }: RouteSelectProps) {
-  const { onChange, selectedOptions } = useRouteSelect(options, filterName, emptyValue);
+  const { onChange, selectedOptions, optionValues } = useRouteSelect(
+    options,
+    filterName,
+    multiple ? defaultValues : [defaultValue]
+  );
   if (multiple) {
     return (
       <Select
@@ -19,6 +25,7 @@ function RouteSelect({
         selectedOptions={selectedOptions}
         onChange={onChange}
         multiple
+        filter={filter !== undefined ? filter : optionValues.length > 0}
       />
     );
   }

@@ -6,11 +6,17 @@ import SearchSelect from "../searchSelect";
 function RouteSearchSelect({
   options,
   filterName,
-  emptyValue,
+  defaultValue = "",
+  defaultValues = [""],
   multiple,
+  filter,
   ...rest
 }: RouteSelectProps) {
-  const { onChange, selectedOptions } = useRouteSelect(options, filterName, emptyValue);
+  const { onChange, selectedOptions, optionValues } = useRouteSelect(
+    options,
+    filterName,
+    multiple ? defaultValues : [defaultValue]
+  );
   if (multiple) {
     return (
       <SearchSelect
@@ -19,6 +25,7 @@ function RouteSearchSelect({
         selectedOptions={selectedOptions}
         onChange={onChange}
         multiple
+        filter={filter !== undefined ? filter : optionValues.length > 0}
       />
     );
   }

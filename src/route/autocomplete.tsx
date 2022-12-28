@@ -6,13 +6,14 @@ import Autocomplete from "../autocomplete";
 function RouteAutocomplete({
   options,
   filterName,
-  emptyValue,
+  defaultValue = "",
+  filter,
   ...rest
 }: RouteAutocompleteProps) {
   const { onChange, selectedOptions, optionValues } = useRouteSelect(
     options,
     filterName,
-    emptyValue
+    [defaultValue]
   );
   const [value] = optionValues;
   const selectedValue: Option | null = value ? { label: value, value } : null;
@@ -22,6 +23,7 @@ function RouteAutocomplete({
       options={options}
       selectedOption={selectedOptions[0] || selectedValue}
       onChange={onChange}
+      filter={filter !== undefined ? filter : optionValues.length > 0}
     />
   );
 }

@@ -18,6 +18,14 @@ type SelectedOptions = {
   selectedOptions: Option[];
 };
 
+type DefaultValue = {
+  defaultValue?: string;
+};
+
+type DefaultValues = {
+  defaultValues?: string[];
+};
+
 export type CommonProps = {
   className?: string;
   placeholder?: string;
@@ -40,10 +48,18 @@ export type MultipleProps = SelectedOptions &
     multiple: true;
   };
 
+export type RouteSingleProps = DefaultValue &
+  Forbid<DefaultValues> & {
+    multiple?: false;
+  };
+
+export type RouteMultipleProps = DefaultValues &
+  Forbid<DefaultValue> & {
+    multiple: true;
+  };
+
 export type RouteProps = {
   filterName: string;
-  emptyValue?: boolean;
-  multiple?: boolean;
 };
 
 export type SelectProps = SelectCommonProps & (SingleProps | MultipleProps);
@@ -58,11 +74,9 @@ export type AutocompleteProps = SelectCommonProps &
   Pick<SingleProps, "selectedOption" | "onChange"> &
   SearchProps;
 
-export type RouteAutocompleteProps = SelectCommonProps &
-  Omit<RouteProps, "multiple"> &
-  SearchProps;
+export type RouteAutocompleteProps = SelectCommonProps & RouteProps & DefaultValue & SearchProps;
 
-export type RouteSelectProps = SelectCommonProps & RouteProps;
+export type RouteSelectProps = SelectCommonProps & RouteProps & (RouteSingleProps | RouteMultipleProps);
 
 type TreeChildren = { children: TreeNode[] };
 
@@ -79,4 +93,4 @@ export type TreeCommonProps = CommonProps & TreeData;
 
 export type TreeSelectProps = TreeCommonProps & (SingleProps | MultipleProps);
 
-export type RouteTreeSelectProps = TreeCommonProps & RouteProps;
+export type RouteTreeSelectProps = TreeCommonProps & RouteProps & (RouteSingleProps | RouteMultipleProps);
