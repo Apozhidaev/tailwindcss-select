@@ -50,7 +50,7 @@ function Select({
         </span>
         {(!resetButton || !selectedLabel) && (
           <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-            <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+            <ChevronDownIcon className="form-input-icon h-5 w-5" aria-hidden="true" />
           </span>
         )}
       </Listbox.Button>
