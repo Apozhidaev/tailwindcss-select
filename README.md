@@ -1,6 +1,6 @@
 # tailwindcss-select
 
-# How to Use
+## How to Use
 
 Step 1.
 ```bash
