@@ -51,7 +51,7 @@ function Autocomplete({
       {resetButton && selectedValue && (
         <button
           type="button"
-          className="form-input-clear absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
+          className="form-input-reset absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
           onClick={() => {
             onChange(null);
           }}
