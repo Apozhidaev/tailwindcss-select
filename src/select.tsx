@@ -35,8 +35,8 @@ function Select({
     >
       <Listbox.Button
         className={classNames(
-          "relative form-control cursor-default pl-3 pr-10 text-left text-sm",
-          filter ? "form-filter" : ""
+          "form-input relative w-full cursor-default pl-3 pr-10 text-left",
+          filter ? "form-input-filter" : ""
         )}
       >
         <span
@@ -50,17 +50,14 @@ function Select({
         </span>
         {(!resetButton || !selectedLabel) && (
           <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-            <ChevronDownIcon
-              className="h-5 w-5 text-secondary-500"
-              aria-hidden="true"
-            />
+            <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
           </span>
         )}
       </Listbox.Button>
       {resetButton && selectedLabel && (
         <button
           type="button"
-          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 rounded hover:bg-secondary-100 active:bg-secondary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+          className="form-input-clear absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
           onClick={() => {
             if (multiple) {
               onChange([]);
@@ -69,10 +66,7 @@ function Select({
             }
           }}
         >
-          <XMarkIcon
-            className="h-4 w-4 text-secondary-500"
-            aria-hidden="true"
-          />
+          <XMarkIcon className="h-4 w-4" aria-hidden="true" />
         </button>
       )}
       <Transition

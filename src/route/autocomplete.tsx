@@ -1,15 +1,7 @@
 import React, { memo } from "react";
 import { useRouteSelect } from "../common/routeHooks";
-import type { CommonProps, Option } from "../types";
+import type { RouteAutocompleteProps, Option } from "../types";
 import Autocomplete from "../autocomplete";
-
-export type RouteAutocompleteProps = CommonProps & {
-  filterName: string;
-  searchQuery: string;
-  onSearch: (searchQuery: string, entry: boolean) => void;
-  minQueryLength?: number;
-  emptyValue?: boolean;
-};
 
 function RouteAutocomplete({
   options,

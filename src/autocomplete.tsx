@@ -2,15 +2,7 @@ import classNames from "classnames";
 import React, { Fragment, memo } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import type { Option, CommonProps } from "./types";
-
-export type AutocompleteProps = CommonProps & {
-  selectedOption: Option | null;
-  onChange: (value: Option | null) => void;
-  searchQuery: string;
-  onSearch: (searchQuery: string, valid: boolean) => void;
-  minQueryLength?: number;
-};
+import type { AutocompleteProps } from "./types";
 
 function Autocomplete({
   className,
@@ -26,7 +18,7 @@ function Autocomplete({
   resetButton = true,
 }: AutocompleteProps) {
   const selectedValue = selectedOption;
-  const selectedLabel = selectedOption?.label;
+  const selectedLabel = selectedOption?.label || '';
 
   const emptyMessage =
     searchQuery.length < minQueryLength
@@ -45,15 +37,12 @@ function Autocomplete({
       className={classNames("relative", className)}
     >
       <Combobox.Input
-        placeholder={selectedLabel || placeholder}
+        placeholder={placeholder}
         className={classNames(
-          "relative form-control cursor-default pl-3 pr-10 text-left text-sm truncate",
-          filter ? "form-filter" : "",
-          selectedLabel
-            ? "placeholder-secondary-800"
-            : "placeholder-secondary-500"
+          "form-input relative w-full cursor-default pl-3 pr-10 text-left truncate placeholder-secondary-500",
+          filter ? "form-input-filter" : "",
         )}
-        displayValue={() => searchQuery}
+        displayValue={() => searchQuery || selectedLabel}
         onChange={({ target }) => {
           const { value } = target;
           onSearch(value, value.length >= minQueryLength);
@@ -62,13 +51,13 @@ function Autocomplete({
       {resetButton && selectedValue && (
         <button
           type="button"
-          className="absolute z-10 right-2.5 inset-y-0 my-2 px-0.5 rounded hover:bg-secondary-100 active:bg-secondary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+          className="form-input-clear absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
           onClick={() => {
             onChange(null);
           }}
         >
           <XMarkIcon
-            className="h-4 w-4 text-secondary-500"
+            className="h-4 w-4"
             aria-hidden="true"
           />
         </button>

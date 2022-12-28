@@ -1,5 +1,4 @@
-import type { SelectProps, TreeSelectProps } from "./types";
-import type { AutocompleteProps } from "./autocomplete";
+import type { SelectProps, TreeSelectProps, AutocompleteProps } from "./types";
 import Select from "./select";
 import SearchSelect from "./searchSelect";
 import Combobox from "./combobox";

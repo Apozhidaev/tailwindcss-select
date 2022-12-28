@@ -3,9 +3,9 @@ import type {
   RouteSelectProps,
   TreeSelectProps,
   RouteTreeSelectProps,
+  AutocompleteProps,
+  RouteAutocompleteProps
 } from "../types";
-import type { AutocompleteProps } from "../autocomplete";
-import type { RouteAutocompleteProps } from "./autocomplete";
 import RouteSelect, { Select } from "./select";
 import RouteSearchSelect, { SearchSelect } from "./searchSelect";
 import Combobox from "../combobox";

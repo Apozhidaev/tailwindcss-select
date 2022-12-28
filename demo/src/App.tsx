@@ -84,6 +84,7 @@ function App() {
           console.log(value);
           setSelectedOption4(value);
         }}
+        placeholder="Search by..."
       />
       <TreeSelect
         selectedOptions={selectedOptions4}
@@ -120,7 +121,7 @@ function App() {
         //   console.log(value);
         //   setSelectedOption3(value);
         // }}
-        placeholder="Search by..."
+        // placeholder="Search by..."
         // resetButton={false}
         filterName="teat1"
       />
