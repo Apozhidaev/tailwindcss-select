@@ -23,7 +23,7 @@ function RouteAutocomplete({
       options={options}
       selectedOption={selectedOptions[0] || selectedValue}
       onChange={onChange}
-      filter={filter !== undefined ? filter : optionValues.length > 0}
+      filter={filter ?? optionValues.length > 0}
     />
   );
 }

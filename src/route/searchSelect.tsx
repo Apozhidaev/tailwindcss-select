@@ -25,7 +25,7 @@ function RouteSearchSelect({
         selectedOptions={selectedOptions}
         onChange={onChange}
         multiple
-        filter={filter !== undefined ? filter : optionValues.length > 0}
+        filter={filter ?? optionValues.length > 0}
       />
     );
   }
@@ -35,6 +35,7 @@ function RouteSearchSelect({
       options={options}
       selectedOption={selectedOptions[0] || null}
       onChange={onChange}
+      filter={filter ?? optionValues.length > 0}
     />
   );
 }
