@@ -43,7 +43,6 @@ import {
   RouteCombobox,
   RouteAutocomplete,
   RouteTreeSelect,
-  TreeSelect, 
 } from "@tailwind-rc/select/route";
 
 ```
