@@ -4,7 +4,9 @@ import type {
   TreeSelectProps,
   RouteTreeSelectProps,
   AutocompleteProps,
-  RouteAutocompleteProps
+  RouteAutocompleteProps,
+  Option,
+  TreeNode,
 } from "../types";
 import RouteSelect, { Select } from "./select";
 import RouteSearchSelect, { SearchSelect } from "./searchSelect";
@@ -20,6 +22,8 @@ export type {
   RouteAutocompleteProps,
   TreeSelectProps,
   RouteTreeSelectProps,
+  Option,
+  TreeNode,
 };
 export {
   RouteSelect,

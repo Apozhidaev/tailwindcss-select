@@ -104,7 +104,7 @@ function TreeGroupOption({
           </span>
         ) : null}
       </div>
-      <div className="pl-10">
+      <div className="pl-5">
         <TreeOptions nodes={node.children} {...rest} />
       </div>
     </div>
@@ -245,7 +245,7 @@ function TreeSelect({
           setSearchQuery("");
         }}
       >
-        <Combobox.Options className="absolute z-40 mt-1 w-full rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+        <Combobox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
           {!isLoading && (
             <div className="relative">
               <MagnifyingGlassIcon
@@ -255,7 +255,7 @@ function TreeSelect({
               <Combobox.Input
                 type="search"
                 placeholder="Search..."
-                className="h-12 w-full bottom-0 border-transparent pl-11 pr-4 text-secondary-800 placeholder-secondary-400 text-sm focus:border-none focus:outline-none focus:ring-0 focus:shadow-none"
+                className="h-12 w-full bottom-0 border-transparent pl-11 pr-4 font-light text-secondary-800 placeholder-secondary-400 text-sm focus:border-none focus:outline-none focus:ring-0 focus:shadow-none"
                 displayValue={() => searchQuery}
                 onChange={(event) => {
                   setSearchQuery(event.target.value);

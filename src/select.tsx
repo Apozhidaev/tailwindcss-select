@@ -75,7 +75,7 @@ function Select({
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <Listbox.Options className="absolute z-40 mt-1 w-full rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+        <Listbox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
           {options.length === 0 || isLoading ? (
             <div className="relative cursor-default select-none py-2 px-4 text-secondary-700">
               {isLoading ? "Loading..." : "No options"}

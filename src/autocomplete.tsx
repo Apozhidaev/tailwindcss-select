@@ -71,7 +71,7 @@ function Autocomplete({
           onSearch("", false);
         }}
       >
-        <Combobox.Options className="absolute z-40 mt-1 w-full rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+        <Combobox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
           {!showOptions ? (
             <div className="relative cursor-default select-none py-2 px-4 text-secondary-700">
               {isLoading ? "Loading..." : emptyMessage}
