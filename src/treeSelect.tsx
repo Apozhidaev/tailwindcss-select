@@ -1,14 +1,22 @@
 import classNames from "classnames";
-import React, { Fragment, memo, useState } from "react";
+import React, { Fragment, memo, useState, useMemo } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import {
   CheckIcon,
   ChevronDownIcon,
   XMarkIcon,
   MagnifyingGlassIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/20/solid";
+import { FolderMinusIcon } from "@heroicons/react/24/outline";
 import type { TreeSelectProps, TreeNode, TreeGroup, Option } from "./types";
 import { getOptions } from "./common/utils";
+
+function getFlatTreeGroups(treeData: TreeNode[]): TreeGroup[] {
+  return treeData
+    .filter((x) => x.children)
+    .flatMap((x) => [x as TreeGroup, ...getFlatTreeGroups(x.children!)]);
+}
 
 function filterNodes(treeData: TreeNode[], searchString: string) {
   const treeNodes: TreeNode[] = [];
@@ -63,10 +71,14 @@ function TreeGroupOption({
   node: TreeGroup;
   selectionSet: Set<Option>;
   selectionCache: Map<TreeGroup, boolean>;
+  collapsedSet: Set<TreeGroup>;
+  onExpand: (value: TreeGroup) => void;
   onChange?: (value: Option[]) => void;
 }) {
   const { selectionSet, selectionCache, onChange } = rest;
   const selected = getSelection(node, selectionSet, selectionCache);
+  const expanded = !rest.collapsedSet.has(node);
+
   return (
     <div>
       <div
@@ -86,7 +98,7 @@ function TreeGroupOption({
             onChange(Array.from(selectionSetClone));
           }
         }}
-        className={`relative select-none py-2 pl-10 pr-4 text-secondary-800 ${
+        className={`relative select-none py-2 pl-10 pr-10 text-secondary-800 ${
           onChange ? "hover:bg-primary-100" : ""
         }`}
       >
@@ -99,14 +111,31 @@ function TreeGroupOption({
           {node.label}
         </span>
         {selected ? (
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-600">
+          <span className="absolute inset-y-0 right-4 flex items-center pl-3 text-primary-600">
             <CheckIcon className="h-5 w-5" aria-hidden="true" />
           </span>
         ) : null}
+        <button
+          type="button"
+          tabIndex={-1}
+          className="absolute inset-y-0 left-0 flex items-center pl-3"
+          onClick={(e) => {
+            e.stopPropagation();
+            rest.onExpand(node);
+          }}
+        >
+          {expanded ? (
+            <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
+          ) : (
+            <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+          )}
+        </button>
       </div>
-      <div className="pl-5">
-        <TreeOptions nodes={node.children} {...rest} />
-      </div>
+      {expanded && (
+        <div className="pl-5">
+          <TreeOptions nodes={node.children} {...rest} />
+        </div>
+      )}
     </div>
   );
 }
@@ -118,6 +147,8 @@ function TreeOptions({
   nodes: TreeNode[];
   selectionSet: Set<Option>;
   selectionCache: Map<TreeGroup, boolean>;
+  collapsedSet: Set<TreeGroup>;
+  onExpand: (value: TreeGroup) => void;
   onChange?: (value: Option[]) => void;
 }) {
   return (
@@ -130,7 +161,7 @@ function TreeOptions({
           <Combobox.Option
             key={node.label}
             className={({ active }) =>
-              `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 ${
+              `relative cursor-default select-none py-2 pl-5 pr-10 text-secondary-800 ${
                 active ? "bg-primary-100" : ""
               }`
             }
@@ -147,7 +178,7 @@ function TreeOptions({
                   {node.label}
                 </span>
                 {selected ? (
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-primary-600">
+                  <span className="absolute inset-y-0 right-4 flex items-center pl-3 text-primary-600">
                     <CheckIcon className="h-5 w-5" aria-hidden="true" />
                   </span>
                 ) : null}
@@ -172,16 +203,18 @@ function TreeSelect({
   filter,
   resetButton = true,
 }: TreeSelectProps) {
+  const [collapsedSet, setCollapsedSet] = useState<Set<TreeGroup>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
   const selectedValue = multiple ? selectedOptions : selectedOption;
   const selectedLabel = multiple
     ? selectedOptions?.map((x) => x.label).join(", ")
     : selectedOption?.label;
 
-  const treeNodes =
-    searchQuery === ""
+  const treeNodes = useMemo(() => {
+    return searchQuery === ""
       ? treeData
       : filterNodes(treeData, searchQuery.toLowerCase().replace(/\s+/g, ""));
+  }, [searchQuery, treeData]);
 
   const selectionSet = new Set<Option>(
     multiple ? selectedOptions : selectedOption ? [selectedOption] : []
@@ -216,7 +249,10 @@ function TreeSelect({
           </span>
           {(!resetButton || !selectedLabel) && (
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronDownIcon className="form-input-icon h-5 w-5" aria-hidden="true" />
+              <ChevronDownIcon
+                className="form-input-icon h-5 w-5"
+                aria-hidden="true"
+              />
             </span>
           )}
         </button>
@@ -243,6 +279,9 @@ function TreeSelect({
         leaveTo="opacity-0"
         afterLeave={() => {
           setSearchQuery("");
+          if (collapsedSet.size > 0) {
+            setCollapsedSet(new Set());
+          }
         }}
       >
         <Combobox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
@@ -255,12 +294,27 @@ function TreeSelect({
               <Combobox.Input
                 type="search"
                 placeholder="Search..."
-                className="h-12 w-full bottom-0 border-transparent pl-11 pr-4 font-light text-secondary-800 placeholder-secondary-400 text-sm focus:border-none focus:outline-none focus:ring-0 focus:shadow-none"
+                className="h-12 w-full bottom-0 border-transparent pl-11 pr-11 text-secondary-800 placeholder-secondary-400 text-sm focus:border-none focus:outline-none focus:ring-0 focus:shadow-none"
                 displayValue={() => searchQuery}
                 onChange={(event) => {
                   setSearchQuery(event.target.value);
                 }}
               />
+              <button
+                type="button"
+                tabIndex={-1}
+                title="Collapse All"
+                className="absolute top-4 right-5 text-secondary-400 hover:text-primary-500"
+                onClick={() => {
+                  const allCollapsedSet = new Set<TreeGroup>();
+                  getFlatTreeGroups(treeNodes).forEach((node) =>
+                    allCollapsedSet.add(node)
+                  );
+                  setCollapsedSet(allCollapsedSet);
+                }}
+              >
+                <FolderMinusIcon className="h-4 w-4" aria-hidden="true" />
+              </button>
             </div>
           )}
           {treeNodes.length === 0 || isLoading ? (
@@ -273,6 +327,15 @@ function TreeSelect({
                 nodes={treeNodes}
                 selectionSet={selectionSet}
                 selectionCache={selectionCache}
+                collapsedSet={collapsedSet}
+                onExpand={(value) => {
+                  if (collapsedSet.has(value)) {
+                    collapsedSet.delete(value);
+                  } else {
+                    collapsedSet.add(value);
+                  }
+                  setCollapsedSet(new Set(collapsedSet));
+                }}
                 onChange={multiple ? onChange : undefined}
               />
             </div>

@@ -23,6 +23,13 @@ const treeData: TreeNode[] = [
     children: [
       { label: "Tom Cook", value: "4" },
       { label: "Tanya Fox", value: "5" },
+      {
+        label: "Devon Webb",
+        children: [
+          { label: "Tom Cook", value: "4.6" },
+          { label: "Tanya Fox fgbg gthhhggh tvybyby", value: "5.6" },
+        ],
+      },
     ],
   },
   { label: "Hellen Schmidt", value: "6" },

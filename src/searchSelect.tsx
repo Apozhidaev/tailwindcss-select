@@ -102,7 +102,7 @@ function SearchSelect({
               <Combobox.Input
                 type="search"
                 placeholder="Search..."
-                className="h-12 w-full bottom-0 border-transparent pl-11 pr-4 font-light text-secondary-800 placeholder-secondary-400 text-sm focus:border-none focus:outline-none focus:ring-0 focus:shadow-none"
+                className="h-12 w-full bottom-0 border-transparent pl-11 pr-4 text-secondary-800 placeholder-secondary-400 text-sm focus:border-none focus:outline-none focus:ring-0 focus:shadow-none"
                 displayValue={() => searchQuery}
                 onChange={(event) => {
                   setSearchQuery(event.target.value);
