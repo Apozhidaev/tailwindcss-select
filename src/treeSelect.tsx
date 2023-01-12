@@ -64,6 +64,40 @@ function getSelection(
   return true;
 }
 
+function getHasSelection(
+  node: TreeGroup,
+  selectionSet: Set<Option>,
+  selectionCache: Map<TreeGroup, boolean>,
+  hasSelectionCache: Map<TreeGroup, boolean>
+) {
+  if (selectionCache.get(node)) {
+    return true;
+  }
+  if (hasSelectionCache.has(node)) {
+    return hasSelectionCache.get(node);
+  }
+  for (let i = 0; i < node.children.length; i++) {
+    const child = node.children[i];
+    let hasSelection;
+    if (child.children) {
+      hasSelection = getHasSelection(
+        child,
+        selectionSet,
+        selectionCache,
+        hasSelectionCache
+      );
+    } else {
+      hasSelection = selectionSet.has(child);
+    }
+    if (hasSelection) {
+      hasSelectionCache.set(node, true);
+      return true;
+    }
+  }
+  hasSelectionCache.set(node, false);
+  return false;
+}
+
 function TreeGroupOption({
   node,
   ...rest
@@ -71,12 +105,15 @@ function TreeGroupOption({
   node: TreeGroup;
   selectionSet: Set<Option>;
   selectionCache: Map<TreeGroup, boolean>;
+  hasSelectionCache: Map<TreeGroup, boolean>;
   collapsedSet: Set<TreeGroup>;
   onExpand: (value: TreeGroup) => void;
   onChange?: (value: Option[]) => void;
 }) {
-  const { selectionSet, selectionCache, onChange } = rest;
+  const { selectionSet, selectionCache, hasSelectionCache, onChange } = rest;
   const selected = getSelection(node, selectionSet, selectionCache);
+  const hasSelection =
+    selected || getHasSelection(node, selectionSet, selectionCache, hasSelectionCache);
   const expanded = !rest.collapsedSet.has(node);
 
   return (
@@ -105,7 +142,7 @@ function TreeGroupOption({
         <span
           title={node.label}
           className={`block truncate ${
-            selected ? "font-medium text-secondary-900" : "font-normal"
+            hasSelection ? "font-medium text-secondary-900" : "font-normal"
           }`}
         >
           {node.label}
@@ -147,6 +184,7 @@ function TreeOptions({
   nodes: TreeNode[];
   selectionSet: Set<Option>;
   selectionCache: Map<TreeGroup, boolean>;
+  hasSelectionCache: Map<TreeGroup, boolean>;
   collapsedSet: Set<TreeGroup>;
   onExpand: (value: TreeGroup) => void;
   onChange?: (value: Option[]) => void;
@@ -220,6 +258,7 @@ function TreeSelect({
     multiple ? selectedOptions : selectedOption ? [selectedOption] : []
   );
   const selectionCache = new Map<TreeGroup, boolean>();
+  const hasSelectionCache = new Map<TreeGroup, boolean>();
 
   return (
     <Combobox
@@ -327,6 +366,7 @@ function TreeSelect({
                 nodes={treeNodes}
                 selectionSet={selectionSet}
                 selectionCache={selectionCache}
+                hasSelectionCache={hasSelectionCache}
                 collapsedSet={collapsedSet}
                 onExpand={(value) => {
                   if (collapsedSet.has(value)) {

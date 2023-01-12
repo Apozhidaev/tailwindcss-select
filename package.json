@@ -1,6 +1,6 @@
 {
   "name": "@tailwind-rc/select",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "module": "dist/module.js",
   "types": "dist/index.d.ts",
