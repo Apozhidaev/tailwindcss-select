@@ -8,7 +8,7 @@ import {
   MagnifyingGlassIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-import { FolderMinusIcon } from "@heroicons/react/24/outline";
+import { FolderMinusIcon, FolderPlusIcon } from "@heroicons/react/24/outline";
 import type { TreeSelectProps, TreeNode, TreeGroup, Option } from "./types";
 import { getOptions } from "./common/utils";
 
@@ -113,7 +113,8 @@ function TreeGroupOption({
   const { selectionSet, selectionCache, hasSelectionCache, onChange } = rest;
   const selected = getSelection(node, selectionSet, selectionCache);
   const hasSelection =
-    selected || getHasSelection(node, selectionSet, selectionCache, hasSelectionCache);
+    selected ||
+    getHasSelection(node, selectionSet, selectionCache, hasSelectionCache);
   const expanded = !rest.collapsedSet.has(node);
 
   return (
@@ -135,13 +136,13 @@ function TreeGroupOption({
             onChange(Array.from(selectionSetClone));
           }
         }}
-        className={`relative select-none py-2 pl-10 pr-10 text-secondary-800 ${
+        className={`relative select-none py-2 pl-10 pr-10 text-secondary-800 tw-rc--option tw-rc--node ${
           onChange ? "hover:bg-primary-100" : ""
         }`}
       >
         <span
           title={node.label}
-          className={`block truncate ${
+          className={`block tw-rc--option-label ${
             hasSelection ? "font-medium text-secondary-900" : "font-normal"
           }`}
         >
@@ -199,7 +200,7 @@ function TreeOptions({
           <Combobox.Option
             key={node.label}
             className={({ active }) =>
-              `relative cursor-default select-none py-2 pl-5 pr-10 text-secondary-800 ${
+              `relative cursor-default select-none py-2 pl-5 pr-10 text-secondary-800 tw-rc--option ${
                 active ? "bg-primary-100" : ""
               }`
             }
@@ -209,7 +210,7 @@ function TreeOptions({
               <>
                 <span
                   title={node.label}
-                  className={`block truncate ${
+                  className={`block tw-rc--option-label ${
                     selected ? "font-medium text-secondary-900" : "font-normal"
                   }`}
                 >
@@ -254,11 +255,18 @@ function TreeSelect({
       : filterNodes(treeData, searchQuery.toLowerCase().replace(/\s+/g, ""));
   }, [searchQuery, treeData]);
 
+  const allCollapsedSet = useMemo(() => {
+    const treeGroupSet = new Set<TreeGroup>();
+    getFlatTreeGroups(treeNodes).forEach((node) => treeGroupSet.add(node));
+    return treeGroupSet;
+  }, [treeNodes]);
+
   const selectionSet = new Set<Option>(
     multiple ? selectedOptions : selectedOption ? [selectedOption] : []
   );
   const selectionCache = new Map<TreeGroup, boolean>();
   const hasSelectionCache = new Map<TreeGroup, boolean>();
+  const collapseAll = allCollapsedSet.size > collapsedSet.size;
 
   return (
     <Combobox
@@ -267,14 +275,14 @@ function TreeSelect({
       multiple={multiple as any}
       nullable
       as="div"
-      className={classNames("relative", className)}
+      className={classNames("relative tw-rc--tree-select", className)}
     >
       <Combobox.Button as="div">
         <button
           type="button"
           className={classNames(
-            "form-input relative w-full cursor-default pl-3 pr-10 text-left",
-            filter ? "form-input-filter" : ""
+            "form-input relative w-full cursor-default pl-3 pr-10 text-left tw-rc--input",
+            filter ? "ftw-rc--filter" : ""
           )}
         >
           <span
@@ -289,7 +297,7 @@ function TreeSelect({
           {(!resetButton || !selectedLabel) && (
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronDownIcon
-                className="form-input-icon h-5 w-5"
+                className="h-5 w-5 tw-rc--dropdown-icon"
                 aria-hidden="true"
               />
             </span>
@@ -299,7 +307,7 @@ function TreeSelect({
       {resetButton && selectedLabel && (
         <button
           type="button"
-          className="form-input-reset absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-rutton"
           onClick={() => {
             if (multiple) {
               onChange([]);
@@ -323,7 +331,7 @@ function TreeSelect({
           }
         }}
       >
-        <Combobox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+        <Combobox.Options className="absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm tw-rc--popup">
           {!isLoading && (
             <div className="relative">
               <MagnifyingGlassIcon
@@ -337,22 +345,29 @@ function TreeSelect({
                 displayValue={() => searchQuery}
                 onChange={(event) => {
                   setSearchQuery(event.target.value);
+                  if (collapsedSet.size > 0) {
+                    setCollapsedSet(new Set());
+                  }
                 }}
               />
               <button
                 type="button"
                 tabIndex={-1}
-                title="Collapse All"
+                title={collapseAll ? "Collapse All" : "Expand All"}
                 className="absolute top-4 right-5 text-secondary-400 hover:text-primary-500"
                 onClick={() => {
-                  const allCollapsedSet = new Set<TreeGroup>();
-                  getFlatTreeGroups(treeNodes).forEach((node) =>
-                    allCollapsedSet.add(node)
-                  );
-                  setCollapsedSet(allCollapsedSet);
+                  if (collapseAll) {
+                    setCollapsedSet(allCollapsedSet);
+                  } else {
+                    setCollapsedSet(new Set());
+                  }
                 }}
               >
-                <FolderMinusIcon className="h-4 w-4" aria-hidden="true" />
+                {collapseAll ? (
+                  <FolderMinusIcon className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <FolderPlusIcon className="h-4 w-4" aria-hidden="true" />
+                )}
               </button>
             </div>
           )}
@@ -361,7 +376,7 @@ function TreeSelect({
               {isLoading ? "Loading..." : "No options"}
             </div>
           ) : (
-            <div className="overflow-auto max-h-60">
+            <div className="overflow-auto max-h-80 tw-rc--option-tree">
               <TreeOptions
                 nodes={treeNodes}
                 selectionSet={selectionSet}

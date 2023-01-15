@@ -12,7 +12,7 @@ const options: Option[] = [
   { label: "Devon Webb", value: "3" },
   { label: "Tom Cook", value: "4" },
   { label: "Tanya Fox", value: "5" },
-  { label: "Hellen Schmidt", value: "6" },
+  { label: "Hellen Schmidt fgbg gthhhggh tvybyby", value: "6" },
 ];
 
 const treeData: TreeNode[] = [
@@ -24,7 +24,7 @@ const treeData: TreeNode[] = [
       { label: "Tom Cook", value: "4" },
       { label: "Tanya Fox", value: "5" },
       {
-        label: "Devon Webb",
+        label: "Devon Webb fgbg gthhhggh tvybyby",
         children: [
           { label: "Tom Cook", value: "4.6" },
           { label: "Tanya Fox fgbg gthhhggh tvybyby", value: "5.6" },
@@ -33,6 +33,9 @@ const treeData: TreeNode[] = [
     ],
   },
   { label: "Hellen Schmidt", value: "6" },
+  { label: "Hellen Schmidt2", value: "62" },
+  { label: "Hellen Schmidt3", value: "63" },
+  { label: "Hellen Schmidt4", value: "64" },
 ];
 
 function App() {

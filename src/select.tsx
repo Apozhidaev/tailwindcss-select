@@ -31,12 +31,12 @@ function Select({
       onChange={onChange}
       multiple={multiple}
       as="div"
-      className={classNames("relative", className)}
+      className={classNames("relative tw-rc--select", className)}
     >
       <Listbox.Button
         className={classNames(
-          "form-input relative w-full cursor-default pl-3 pr-10 text-left",
-          filter ? "form-input-filter" : ""
+          "form-input relative w-full cursor-default pl-3 pr-10 text-left tw-rc--input",
+          filter ? "tw-rc--filter" : ""
         )}
       >
         <span
@@ -50,14 +50,17 @@ function Select({
         </span>
         {(!resetButton || !selectedLabel) && (
           <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-            <ChevronDownIcon className="form-input-icon h-5 w-5" aria-hidden="true" />
+            <ChevronDownIcon
+              className="h-5 w-5 tw-rc--dropdown-icon"
+              aria-hidden="true"
+            />
           </span>
         )}
       </Listbox.Button>
       {resetButton && selectedLabel && (
         <button
           type="button"
-          className="form-input-reset absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-rutton"
           onClick={() => {
             if (multiple) {
               onChange([]);
@@ -75,18 +78,18 @@ function Select({
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <Listbox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+        <Listbox.Options className="absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm tw-rc--popup">
           {options.length === 0 || isLoading ? (
             <div className="relative cursor-default select-none py-2 px-4 text-secondary-700">
               {isLoading ? "Loading..." : "No options"}
             </div>
           ) : (
-            <div className="overflow-auto max-h-60">
+            <div className="overflow-auto max-h-60 tw-rc--option-list">
               {options.map((option) => (
                 <Listbox.Option
                   key={option.label}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 ${
+                    `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 tw-rc--option ${
                       active ? "bg-primary-100" : ""
                     }`
                   }
@@ -96,7 +99,7 @@ function Select({
                     <>
                       <span
                         title={option.label}
-                        className={`block truncate ${
+                        className={`block tw-rc--option-label ${
                           selected && selectedValue
                             ? "font-medium text-secondary-900"
                             : "font-normal"

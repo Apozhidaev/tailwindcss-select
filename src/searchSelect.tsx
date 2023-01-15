@@ -42,14 +42,14 @@ function SearchSelect({
       multiple={multiple as any}
       nullable
       as="div"
-      className={classNames("relative", className)}
+      className={classNames("relative tw-rc--search-select", className)}
     >
       <Combobox.Button as="div">
         <button
           type="button"
           className={classNames(
-            "form-input relative w-full cursor-default pl-3 pr-10 text-left",
-            filter ? "form-input-filter" : ""
+            "form-input relative w-full cursor-default pl-3 pr-10 text-left tw-rc--input",
+            filter ? "tw-rc--filter" : ""
           )}
         >
           <span
@@ -63,7 +63,10 @@ function SearchSelect({
           </span>
           {(!resetButton || !selectedLabel) && (
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronDownIcon className="form-input-icon h-5 w-5" aria-hidden="true" />
+              <ChevronDownIcon
+                className="h-5 w-5 tw-rc--dropdown-icon"
+                aria-hidden="true"
+              />
             </span>
           )}
         </button>
@@ -71,7 +74,7 @@ function SearchSelect({
       {resetButton && selectedLabel && (
         <button
           type="button"
-          className="form-input-reset absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-rutton"
           onClick={() => {
             if (multiple) {
               onChange([]);
@@ -92,7 +95,7 @@ function SearchSelect({
           setSearchQuery("");
         }}
       >
-        <Combobox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+        <Combobox.Options className="absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm tw-rc--popup">
           {!isLoading && (
             <div className="relative">
               <MagnifyingGlassIcon
@@ -115,12 +118,12 @@ function SearchSelect({
               {isLoading ? "Loading..." : "No options"}
             </div>
           ) : (
-            <div className="overflow-auto max-h-60">
+            <div className="overflow-auto max-h-60 tw-rc--option-list">
               {currentOptions.map((option) => (
                 <Combobox.Option
                   key={option.label}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 ${
+                    `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 tw-rc--option ${
                       active ? "bg-primary-100" : ""
                     }`
                   }
@@ -130,7 +133,7 @@ function SearchSelect({
                     <>
                       <span
                         title={option.label}
-                        className={`block truncate ${
+                        className={`block tw-rc--option-label ${
                           selected && selectedValue
                             ? "font-medium text-secondary-900"
                             : "font-normal"

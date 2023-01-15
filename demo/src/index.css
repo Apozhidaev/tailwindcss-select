@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 @layer components {
-  .form-input-filter {
+  .tw-rc--filter {
     @apply ring-1 border-orange-300/80 ring-orange-300/80;
   }
-  .form-input-reset {
+  .tw-rc--reset-rutton {
     @apply hover:bg-secondary-100 active:bg-secondary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500;
   }
 }

@@ -18,7 +18,7 @@ function Autocomplete({
   resetButton = true,
 }: AutocompleteProps) {
   const selectedValue = selectedOption;
-  const selectedLabel = selectedOption?.label || '';
+  const selectedLabel = selectedOption?.label || "";
 
   const emptyMessage =
     searchQuery.length < minQueryLength
@@ -34,13 +34,13 @@ function Autocomplete({
       onChange={onChange}
       nullable
       as="div"
-      className={classNames("relative", className)}
+      className={classNames("relative tw-rc--autocomplete", className)}
     >
       <Combobox.Input
         placeholder={placeholder}
         className={classNames(
-          "form-input relative w-full cursor-default pl-3 pr-10 text-left truncate placeholder-secondary-500",
-          filter ? "form-input-filter" : "",
+          "form-input relative w-full cursor-default pl-3 pr-10 text-left truncate placeholder-secondary-500 tw-rc--input",
+          filter ? "tw-rc--filter" : ""
         )}
         displayValue={() => searchQuery || selectedLabel}
         onChange={({ target }) => {
@@ -51,15 +51,12 @@ function Autocomplete({
       {resetButton && selectedValue && (
         <button
           type="button"
-          className="form-input-reset absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-rutton"
           onClick={() => {
             onChange(null);
           }}
         >
-          <XMarkIcon
-            className="h-4 w-4"
-            aria-hidden="true"
-          />
+          <XMarkIcon className="h-4 w-4" aria-hidden="true" />
         </button>
       )}
       <Transition
@@ -71,18 +68,18 @@ function Autocomplete({
           onSearch("", false);
         }}
       >
-        <Combobox.Options className="form-input-popup absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm">
+        <Combobox.Options className="absolute z-40 mt-1 w-full bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-sm tw-rc--popup">
           {!showOptions ? (
             <div className="relative cursor-default select-none py-2 px-4 text-secondary-700">
               {isLoading ? "Loading..." : emptyMessage}
             </div>
           ) : (
-            <div className="overflow-auto max-h-60">
+            <div className="overflow-auto max-h-60 tw-rc--option-list">
               {options.map((option) => (
                 <Combobox.Option
                   key={option.label}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 ${
+                    `relative cursor-default select-none py-2 pl-10 pr-4 text-secondary-800 tw-rc--option ${
                       active ? "bg-primary-100" : ""
                     }`
                   }
@@ -92,7 +89,7 @@ function Autocomplete({
                     <>
                       <span
                         title={option.label}
-                        className={`block truncate ${
+                        className={`block tw-rc--option-label ${
                           selected && selectedValue
                             ? "font-medium text-secondary-900"
                             : "font-normal"
