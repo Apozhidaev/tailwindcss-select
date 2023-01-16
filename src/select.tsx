@@ -36,7 +36,7 @@ function Select({
       <Listbox.Button
         className={classNames(
           "form-input relative w-full cursor-default pl-3 pr-10 text-left tw-rc--input",
-          filter ? "tw-rc--filter" : ""
+          filter ? "form-input-filter tw-rc--filter" : ""
         )}
       >
         <span
@@ -60,7 +60,7 @@ function Select({
       {resetButton && selectedLabel && (
         <button
           type="button"
-          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-rutton"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-button"
           onClick={() => {
             if (multiple) {
               onChange([]);

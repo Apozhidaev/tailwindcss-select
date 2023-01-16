@@ -40,7 +40,7 @@ function Autocomplete({
         placeholder={placeholder}
         className={classNames(
           "form-input relative w-full cursor-default pl-3 pr-10 text-left truncate placeholder-secondary-500 tw-rc--input",
-          filter ? "tw-rc--filter" : ""
+          filter ? "form-input-filter tw-rc--filter" : ""
         )}
         displayValue={() => searchQuery || selectedLabel}
         onChange={({ target }) => {
@@ -51,7 +51,7 @@ function Autocomplete({
       {resetButton && selectedValue && (
         <button
           type="button"
-          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-rutton"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-button"
           onClick={() => {
             onChange(null);
           }}

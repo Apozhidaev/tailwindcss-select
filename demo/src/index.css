@@ -6,7 +6,7 @@
   .tw-rc--filter {
     @apply ring-1 border-orange-300/80 ring-orange-300/80;
   }
-  .tw-rc--reset-rutton {
+  .tw-rc--reset-button {
     @apply hover:bg-secondary-100 active:bg-secondary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500;
   }
 }

@@ -282,7 +282,7 @@ function TreeSelect({
           type="button"
           className={classNames(
             "form-input relative w-full cursor-default pl-3 pr-10 text-left tw-rc--input",
-            filter ? "ftw-rc--filter" : ""
+            filter ? "form-input-filter tw-rc--filter" : ""
           )}
         >
           <span
@@ -307,7 +307,7 @@ function TreeSelect({
       {resetButton && selectedLabel && (
         <button
           type="button"
-          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-rutton"
+          className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-button"
           onClick={() => {
             if (multiple) {
               onChange([]);
@@ -357,7 +357,7 @@ function TreeSelect({
                 className="absolute top-4 right-5 text-secondary-400 hover:text-primary-500"
                 onClick={() => {
                   if (collapseAll) {
-                    setCollapsedSet(allCollapsedSet);
+                    setCollapsedSet(new Set(allCollapsedSet));
                   } else {
                     setCollapsedSet(new Set());
                   }
@@ -384,12 +384,13 @@ function TreeSelect({
                 hasSelectionCache={hasSelectionCache}
                 collapsedSet={collapsedSet}
                 onExpand={(value) => {
-                  if (collapsedSet.has(value)) {
-                    collapsedSet.delete(value);
+                  const collapsed = new Set(collapsedSet);
+                  if (collapsed.has(value)) {
+                    collapsed.delete(value);
                   } else {
-                    collapsedSet.add(value);
+                    collapsed.add(value);
                   }
-                  setCollapsedSet(new Set(collapsedSet));
+                  setCollapsedSet(collapsed);
                 }}
                 onChange={multiple ? onChange : undefined}
               />
