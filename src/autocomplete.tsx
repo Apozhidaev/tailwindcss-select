@@ -16,6 +16,7 @@ function Autocomplete({
   onSearch,
   minQueryLength = 2,
   resetButton = true,
+  disabled,
 }: AutocompleteProps) {
   const selectedValue = selectedOption;
   const selectedLabel = selectedOption?.label || "";
@@ -35,6 +36,7 @@ function Autocomplete({
       nullable
       as="div"
       className={classNames("relative tw-rc--autocomplete", className)}
+      disabled={disabled}
     >
       <Combobox.Input
         placeholder={placeholder}
@@ -50,6 +52,7 @@ function Autocomplete({
       />
       {resetButton && selectedValue && (
         <button
+          disabled={disabled}
           type="button"
           className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-button"
           onClick={() => {

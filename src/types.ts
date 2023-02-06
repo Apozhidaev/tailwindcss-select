@@ -32,6 +32,7 @@ export type CommonProps = {
   isLoading?: boolean;
   filter?: boolean;
   resetButton?: boolean;
+  disabled?: boolean;
 };
 
 export type SelectCommonProps = CommonProps & Options;

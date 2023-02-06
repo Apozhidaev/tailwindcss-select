@@ -19,6 +19,7 @@ function Select({
   isLoading,
   filter,
   resetButton = true,
+  disabled,
 }: SelectProps) {
   const selectedValue = multiple ? selectedOptions : selectedOption;
   const selectedLabel = multiple
@@ -32,6 +33,7 @@ function Select({
       multiple={multiple}
       as="div"
       className={classNames("relative tw-rc--select", className)}
+      disabled={disabled}
     >
       <Listbox.Button
         className={classNames(
@@ -59,6 +61,7 @@ function Select({
       </Listbox.Button>
       {resetButton && selectedLabel && (
         <button
+          disabled={disabled}
           type="button"
           className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-button"
           onClick={() => {

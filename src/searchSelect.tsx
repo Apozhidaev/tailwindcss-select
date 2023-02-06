@@ -20,6 +20,7 @@ function SearchSelect({
   isLoading,
   filter,
   resetButton = true,
+  disabled,
 }: SelectProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const selectedValue = multiple ? selectedOptions : selectedOption;
@@ -43,9 +44,11 @@ function SearchSelect({
       nullable
       as="div"
       className={classNames("relative tw-rc--search-select", className)}
+      disabled={disabled}
     >
       <Combobox.Button as="div">
         <button
+          disabled={disabled}
           type="button"
           className={classNames(
             "form-input relative w-full cursor-default pl-3 pr-10 text-left tw-rc--input",
@@ -73,6 +76,7 @@ function SearchSelect({
       </Combobox.Button>
       {resetButton && selectedLabel && (
         <button
+          disabled={disabled}
           type="button"
           className="absolute z-10 right-2.5 inset-y-0 my-auto h-5 px-0.5 tw-rc--reset-button"
           onClick={() => {
